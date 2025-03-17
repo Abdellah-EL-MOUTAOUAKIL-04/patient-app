@@ -35,4 +35,14 @@ public class PatientController {
         patientRepository.deleteById(id);
         return "redirect:/index?page="+page+"&keyword="+keyword;
     }
+
+    @GetMapping("/editPatient")
+    public String editPatients(Model model, Long id ,String keyword, int page) {
+        Patient patient = patientRepository.findById(id).orElse(null);
+        if (patient == null) throw new RuntimeException("Patient introuvable");
+        model.addAttribute("patient", patient);
+        model.addAttribute("page",page);
+        model.addAttribute("keyword",keyword);
+        return "editPatient";
+    }
 }
