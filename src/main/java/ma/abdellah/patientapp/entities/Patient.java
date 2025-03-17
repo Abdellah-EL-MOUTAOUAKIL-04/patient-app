@@ -19,7 +19,6 @@ public class Patient {
     @Size(min = 5,max = 45)
     private String nom;
     private String prenom;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateNaissance;
     @DecimalMax("100")
     private int score;
