@@ -1,12 +1,15 @@
 package ma.abdellah.patientapp.web;
 
+import jakarta.validation.Valid;
 import ma.abdellah.patientapp.entities.Patient;
 import ma.abdellah.patientapp.repository.PatientRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -44,5 +47,12 @@ public class PatientController {
         model.addAttribute("page",page);
         model.addAttribute("keyword",keyword);
         return "editPatient";
+    }
+
+    @PostMapping("/save")
+    public String savePatient(Model model, @Valid Patient patient, BindingResult bindingResult, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String keyword){
+        if (bindingResult.hasErrors()) return "formPatient";
+        patientRepository.save(patient);
+        return "redirect:/index?page="+page+"&keyword="+keyword;
     }
 }
