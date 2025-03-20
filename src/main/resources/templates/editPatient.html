@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1">
 
 <head>
     <meta charset="UTF-8">
@@ -8,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"/>
 </head>
 <body>
-
+<div layout:fragment="content1">
     <div class="col-md-6 offset-3">
         <h1>Formulaire de modification des patients</h1>
         <form method="post" th:action="@{save(page=${page},keyword=${keyword})}">
@@ -56,6 +57,6 @@
             <button type="submit" class="btn btn-outline-info">Enregistrer</button>
         </form>
     </div>
-
+</div>
 </body>
 </html>
