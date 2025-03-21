@@ -49,6 +49,12 @@ public class PatientController {
         return "editPatient";
     }
 
+    @GetMapping("/admin/formPatients")
+    public String formPatients(Model model) {
+        model.addAttribute("patient", new Patient());
+        return "formPatients";
+    }
+
     @PostMapping("/save")
     public String savePatient(Model model, @Valid Patient patient, BindingResult bindingResult, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String keyword){
         if (bindingResult.hasErrors()) return "formPatient";
