@@ -20,7 +20,12 @@ public class PatientController {
     public PatientController(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
     }
-    
+
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/index";
+    }
+
     @GetMapping("/index")
     public String index(Model model,@RequestParam(name = "page", defaultValue = "0") int page,
     @RequestParam(name = "size", defaultValue = "5") int size,
@@ -49,10 +54,10 @@ public class PatientController {
         return "editPatient";
     }
 
-    @GetMapping("/admin/formPatients")
+    @GetMapping("/formPatients")
     public String formPatients(Model model) {
         model.addAttribute("patient", new Patient());
-        return "formPatients";
+        return "formPatient";
     }
 
     @PostMapping("/save")
