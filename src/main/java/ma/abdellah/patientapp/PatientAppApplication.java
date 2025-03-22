@@ -2,6 +2,7 @@ package ma.abdellah.patientapp;
 
 import ma.abdellah.patientapp.entities.Patient;
 import ma.abdellah.patientapp.repository.PatientRepository;
+import ma.abdellah.patientapp.security.service.AccountService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -35,7 +36,7 @@ public class PatientAppApplication {
         };
     }
 
-    @Bean
+    //@Bean
     public CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager){
         return args -> {
             UserDetails user = jdbcUserDetailsManager.loadUserByUsername("user11");
@@ -44,6 +45,21 @@ public class PatientAppApplication {
                 jdbcUserDetailsManager.createUser(User.withUsername("user22").password(passwordEncoder().encode("1234")).roles("USER").build());
                 jdbcUserDetailsManager.createUser(User.withUsername("admin2").password(passwordEncoder().encode("1234")).roles("USER","ADMIN").build());
             }
+        };
+    }
+
+    //@Bean
+    public CommandLineRunner commandLineRunnerUserDetails(AccountService accountService){
+        return args -> {
+            accountService.addNewRole("USER");
+            accountService.addNewRole("ADMIN");
+            accountService.addNewUser("user1","1234","user1@gmail.com","1234");
+            accountService.addNewUser("user2","1234","user2@gmail.com","1234");
+            accountService.addNewUser("admin","1234","user3@gmail.com","1234");
+            accountService.addRoleToUser("user1","USER");
+            accountService.addRoleToUser("user2","USER");
+            accountService.addRoleToUser("admin","USER");
+            accountService.addRoleToUser("admin","ADMIN");
         };
     }
 
