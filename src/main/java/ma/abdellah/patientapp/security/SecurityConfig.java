@@ -1,6 +1,7 @@
 package ma.abdellah.patientapp.security;
 
 import lombok.AllArgsConstructor;
+import ma.abdellah.patientapp.security.service.UserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -22,8 +23,8 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig{
     PasswordEncoder passwordEncoder;
-
-    @Bean
+    UserDetailServiceImpl userDetailServiceImpl;
+    //@Bean
     public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
         return new JdbcUserDetailsManager(dataSource);
     }
@@ -52,6 +53,8 @@ public class SecurityConfig{
         //en utilisant sa en peut acceder a aucune chose dans notre app
         httpSecurity.authorizeHttpRequests(ar -> ar.anyRequest().authenticated());
         httpSecurity.exceptionHandling(exception->exception.accessDeniedPage("/notAuthorized"));
+        //il faut ajouter celui la au dessous si vous voulez travaille avec userdetailsService
+        httpSecurity.userDetailsService(userDetailServiceImpl);
         return httpSecurity.build();
     }
 }
