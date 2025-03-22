@@ -32,8 +32,11 @@ public class SecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         //pour ajouter un formulaire d'authentification
         httpSecurity.formLogin(form -> form.defaultSuccessUrl("/", true));
+        httpSecurity.authorizeHttpRequests(ar->ar.anyRequest().authenticated().requestMatchers("/user/**").hasRole("USER"));
+        httpSecurity.authorizeHttpRequests(ar->ar.anyRequest().authenticated().requestMatchers("/admin/**").hasRole("ADMIN"));
         //en utilisant sa en peut acceder a aucune chose dans notre app
         httpSecurity.authorizeHttpRequests(ar -> ar.anyRequest().authenticated());
+        httpSecurity.exceptionHandling(exception->exception.accessDeniedPage("/notAuthorized"));
         return httpSecurity.build();
     }
 }
