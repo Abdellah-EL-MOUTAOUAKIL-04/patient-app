@@ -49,7 +49,7 @@ public class PatientController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String formPatients(Model model) {
         model.addAttribute("patient", new Patient());
-        return "formPatients";
+        return "formPatient";
     }
 
     @PostMapping("/admin/save")
